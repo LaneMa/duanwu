@@ -17,5 +17,9 @@ public interface PlayersMapper extends Mapper<Players> {
     @Select("select * from t_players")
     List<Players> getPlayers();
 
+    @Select("select * from t_players where suspend = ${suspend} order by ability_value desc")
+    List<Players> getPlayersUnSuspend(@Param("suspend") int suspend);
+
+    @Select("select * from t_players order by ability_value desc")
     List<Players> getPlayersByAbility();
 }
