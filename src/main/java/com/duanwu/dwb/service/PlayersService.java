@@ -29,4 +29,10 @@ public class PlayersService {
 
         return playersList;
     }
+
+    public List<Players> getPlayersUnSuspend() {
+        List<Players> playersList = playersMapper.getPlayersUnSuspend(0);
+
+        return playersList;
+    }
 }

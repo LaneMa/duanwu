@@ -6,10 +6,12 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @SuppressWarnings("unused")
-@Table(name = "t_group_players")
+@Table(name = "t_session")
 public class Session {
     public String name;
     public String session;
+    public int order;
+    public int level;
     public int one;
     public int two;
     public int three;

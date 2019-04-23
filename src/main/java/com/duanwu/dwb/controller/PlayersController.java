@@ -33,4 +33,10 @@ public class PlayersController {
         List<Players> value = playersService.getPlayers();
         return  value;
     }
+
+    @GetMapping("/suspend")
+    public Object getPlayersUnSuspend() {
+        List<Players> value = playersService.getPlayersUnSuspend();
+        return  value;
+    }
 }

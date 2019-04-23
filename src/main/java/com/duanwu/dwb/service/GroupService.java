@@ -32,7 +32,7 @@ public class GroupService {
 
         String groupName[] = {"A", "B", "C", "D"};
         int j = getRandom(0, 3);
-        List<Players> players = playersMapper.getPlayersUnSuspend(0);
+        List<Players> players = playersMapper.getPlayersUnSuspendDesc(0);
         for (int n = 0; n < 4; n++) {
             Group group = new Group();
             group.player_name = players.get(n).name;
@@ -57,5 +57,9 @@ public class GroupService {
             j++;
         }
         return getGroups();
+    }
+
+    public void setSession() {
+
     }
 }
