@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.duanwu.dwb.db.SessionMapper">
+
+    <resultMap id="SessionMapper"
+               type="com.duanwu.dwb.model.Session"/>
+
+    <select id="truncate" resultMap="SessionMapper">
+        truncate t_session
+    </select>
+
+</mapper>
