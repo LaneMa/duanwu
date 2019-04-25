@@ -166,6 +166,7 @@ public class SessionService {
                 sessionNew.two,
                 sessionNew.three,
                 sessionNew.score,
+                sessionNew.win,
                 sessionNew.foul,
                 sessionNew.over);
     }
@@ -202,6 +203,7 @@ public class SessionService {
                 sessionNew.two,
                 sessionNew.three,
                 sessionNew.score,
+                sessionNew.win,
                 sessionNew.foul,
                 sessionNew.over);
     }
@@ -234,12 +236,16 @@ public class SessionService {
                 sessionNew.over = 1;
                 sessionNew.win = 1;
                 setOtherPlayerOver(sessionNew.name, sessionNew.session);
+            } else {
+                sessionNew.win = 0;
             }
         } else if ((level == 2) || (level == 3)) {
             if (sessionNew.score >= 11) {
                 sessionNew.over = 1;
                 sessionNew.win = 1;
                 setOtherPlayerOver(sessionNew.name, sessionNew.session);
+            } else {
+                sessionNew.win = 0;
             }
         }
         sessionMapper.updateSession(name,
@@ -248,6 +254,7 @@ public class SessionService {
                 sessionNew.two,
                 sessionNew.three,
                 sessionNew.score,
+                sessionNew.win,
                 sessionNew.foul,
                 sessionNew.over);
     }

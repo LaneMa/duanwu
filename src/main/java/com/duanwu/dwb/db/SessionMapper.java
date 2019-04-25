@@ -28,13 +28,14 @@ public interface SessionMapper extends Mapper<Session> {
     @Select("select * from t_session where name != #{name} AND session = #{session}")
     List<Session> getSessionOther(@Param("name") String name, @Param("session") String session);
 
-    @Update("update t_session set one = ${one}, two = ${two}, three = ${three}, score = ${score}, foul = ${foul}, over = ${over} where name = #{name} AND session = #{session}")
+    @Update("update t_session set one = ${one}, two = ${two}, three = ${three}, score = ${score}, win = ${win}, foul = ${foul}, over = ${over} where name = #{name} AND session = #{session}")
     int updateSession(@Param("name") String name,
                       @Param("session") String session,
                       @Param("one") int one,
                       @Param("two") int two,
                       @Param("three") int three,
                       @Param("score") int score,
+                      @Param("win") int win,
                       @Param("foul") int foul,
                       @Param("over") int over);
 
