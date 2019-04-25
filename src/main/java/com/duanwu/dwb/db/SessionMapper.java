@@ -1,5 +1,6 @@
 package com.duanwu.dwb.db;
 
+import com.duanwu.dwb.model.LevelRise;
 import com.duanwu.dwb.model.Session;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -42,6 +43,12 @@ public interface SessionMapper extends Mapper<Session> {
 
     @Select("select * from t_session where score >= ${score} AND level = ${level}")
     List<Session> getSessionRise(@Param("score") int score, @Param("level") int level);
+
+    @Select("select count(*) from t_session where name = #{name} AND group = #{group} AND win = ${win}")
+    int getWinCount(@Param("name") String name, @Param("group") String group, @Param("win") int win);
+
+    @Select("select sum(score) AS totalScore from t_session where name = #{name} AND group = #{group}")
+    LevelRise getTotalScore(@Param("name") String name, @Param("group") String group);
 
     void truncate();
 }

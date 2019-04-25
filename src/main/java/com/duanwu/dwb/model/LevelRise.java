@@ -1,7 +1,7 @@
 package com.duanwu.dwb.model;
 
 public class LevelRise {
-    String name;
-    int winCount;
-    int totalScore;
+    public String name;
+    public int winCount;
+    public int totalScore;
 }
