@@ -39,7 +39,7 @@ public interface SessionMapper extends Mapper<Session> {
                       @Param("over") int over);
 
     @Select("select count(*) from t_session where over = ${over} AND level = ${level}")
-    List<Session> getSessionOverCount(@Param("over") int over, @Param("level") int level);
+    int getSessionOverCount(@Param("over") int over, @Param("level") int level);
 
     @Select("select * from t_session where score >= ${score} AND level = ${level}")
     List<Session> getSessionRise(@Param("score") int score, @Param("level") int level);
