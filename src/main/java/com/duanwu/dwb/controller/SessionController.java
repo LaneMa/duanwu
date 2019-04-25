@@ -55,7 +55,7 @@ public class SessionController {
 
     @GetMapping("/rise")
     public void subtractSessionsState(@Param("level") int level) {
-        //小组赛结束level=2，半决赛结束level=3
+        //小组赛结束level=1，半决赛结束level=2
         sessionService.riseLevel(level);
     }
 }

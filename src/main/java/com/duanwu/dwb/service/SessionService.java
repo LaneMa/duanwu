@@ -206,9 +206,9 @@ public class SessionService {
 
     public void riseLevel(int level) {
         if (sessionMapper.getSessionOverCount(0, level).size() <= 0) {
-            if (level == 2) {
+            if (level == 1) {
                 setSessionLevel2();
-            } else if (level == 3) {
+            } else if (level == 2) {
                 setSessionLevel3();
             }
         }
