@@ -12,6 +12,7 @@ public class Session {
     public String group_name;
     public String session;
     public int over = 0;
+    public int win = 0;
     public int order_number;
     public int level;
     public int one = 0;

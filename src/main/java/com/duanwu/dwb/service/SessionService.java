@@ -1,16 +1,28 @@
 package com.duanwu.dwb.service;
 
+import com.duanwu.dwb.db.GroupMapper;
 import com.duanwu.dwb.db.SessionMapper;
+import com.duanwu.dwb.model.Group;
+import com.duanwu.dwb.model.LevelRise;
 import com.duanwu.dwb.model.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class SessionService {
+    @Value("${groupName}")
+    private String groupName[];
+
     @Autowired
     SessionMapper sessionMapper;
+
+    @Autowired
+    GroupMapper groupMapper;
 
     public List<Session> getSessions() {
         List<Session> sessionList = sessionMapper.getSessionAllByLevel();
@@ -52,7 +64,74 @@ public class SessionService {
         return sessionNew;
     }
 
-    public void setSessionState(String name, String session, int type) {
+    public Session getRiseLevel1(String group) {
+        List<Group> groupList = groupMapper.getGroupsByName(group);
+        List<LevelRise> levelRises = new ArrayList<>();
+        for (int i = 0; i < groupList.size(); i++) {
+        }
+        return null;
+    }
+
+    public void setSessionLevel2() {
+        List<Session> sessionList = new ArrayList<>();
+        for(int j = 0; j < groupName.length; j++) {
+            sessionList.add(getRiseLevel1(groupName[j]));
+        }
+
+
+        int order_number = sessionMapper.getSessionByLevel(1).size()/2;
+        for(int i = 0; i < sessionList.size(); i++) {
+            Session session = new Session();
+            session.name = sessionList.get(i).name;
+            session.game_time = new Date();
+            session.level = 2;
+            if ((sessionList.get(i).group_name.equals("A")) || (sessionList.get(i).group_name.equals("C"))) {
+                session.order_number = order_number + 1;
+                session.session = "E1";
+                session.group_name = "E";
+            } else if ((sessionList.get(i).group_name.equals("B")) || (sessionList.get(i).group_name.equals("D"))) {
+                session.order_number = order_number + 2;
+                session.session = "F1";
+                session.group_name = "F";
+            }
+
+            sessionMapper.insert(session);
+        }
+    }
+
+    public void setSessionLevel3() {
+        List<Session> sessionList = sessionMapper.getSessionRise(11, 2);
+        int order_number = sessionMapper.getSessionByLevel(1).size()/2 + 2;
+        for(int i = 0; i < sessionList.size(); i++) {
+            Session session = new Session();
+            session.name = sessionList.get(i).name;
+            session.game_time = new Date();
+            session.level = 2;
+
+            session.order_number = order_number + 1;
+            session.session = "G1";
+            session.group_name = "G";
+
+            sessionMapper.insert(session);
+        }
+    }
+
+    public void setOtherPlayerOver(String name, String session) {
+        Session sessionOther = sessionMapper.getSessionOther(name, session).get(0);
+        Session sessionNew = cloneSession(sessionOther);
+        sessionNew.over = 1;
+
+        sessionMapper.updateSession(sessionNew.name,
+                sessionNew.session,
+                sessionNew.one,
+                sessionNew.two,
+                sessionNew.three,
+                sessionNew.score,
+                sessionNew.foul,
+                sessionNew.over);
+    }
+
+    public void setSessionState(String name, String session, int type, int level) {
         Session sessionObject = sessionMapper.getSessionOne(name, session).get(0);
         Session sessionNew = cloneSession(sessionObject);
         if (type == 1) {
@@ -65,13 +144,17 @@ public class SessionService {
             sessionNew.foul = sessionObject.foul + 1;
         }
         sessionNew.score = sessionNew.one*1 + sessionNew.two*2 + sessionNew.three*3;
-        if (sessionNew.level == 1) {
+        if (level == 1) {
             if (sessionNew.score >= 7) {
                 sessionNew.over = 1;
+                sessionNew.win = 1;
+                setOtherPlayerOver(sessionNew.name, sessionNew.session);
             }
-        } else if ((sessionNew.level == 2) || (sessionNew.level == 3)) {
+        } else if ((level == 2) || (level == 3)) {
             if (sessionNew.score >= 11) {
                 sessionNew.over = 1;
+                sessionNew.win = 1;
+                setOtherPlayerOver(sessionNew.name, sessionNew.session);
             }
         }
         sessionMapper.updateSession(name,
@@ -82,5 +165,13 @@ public class SessionService {
                 sessionNew.score,
                 sessionNew.foul,
                 sessionNew.over);
+
+        if (sessionMapper.getSessionOverCount(0, level).size() <= 0) {
+            if (level == 2) {
+//                setSessionLevel2();
+            } else if (level == 3) {
+                setSessionLevel3();
+            }
+        }
     }
 }

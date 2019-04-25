@@ -65,7 +65,7 @@ public class GroupService {
             j++;
         }
 
-        setSession();
+        setSessionLevel1();
 
         return getGroups();
     }
@@ -74,7 +74,7 @@ public class GroupService {
         return groupMapper.getGroupsByName(name);
     }
 
-    public void setSession() {
+    public void setSessionLevel1() {
         sessionMapper.truncate();
 
         for (int i = 0; i < groupName.length; i++) {
