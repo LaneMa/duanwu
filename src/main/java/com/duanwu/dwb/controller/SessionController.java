@@ -22,4 +22,14 @@ public class SessionController {
     public Object getSessionsByLevel(@Param("level") int level) {
         return sessionService.getSessionsByLevel(level);
     }
+
+    @GetMapping("/order")
+    public Object getSessionsByOrder(@Param("order") int order) {
+        return sessionService.getSessionsByOrder(order);
+    }
+
+    @GetMapping("/count")
+    public Object getSessionsByOrder() {
+        return sessionService.getSessionCount();
+    }
 }

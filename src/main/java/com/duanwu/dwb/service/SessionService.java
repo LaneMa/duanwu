@@ -13,7 +13,7 @@ public class SessionService {
     SessionMapper sessionMapper;
 
     public List<Session> getSessions() {
-        List<Session> sessionList = sessionMapper.selectAll();
+        List<Session> sessionList = sessionMapper.getSessionAllByLevel();
 
         return sessionList;
     }
@@ -22,5 +22,15 @@ public class SessionService {
         List<Session> sessionList = sessionMapper.getSessionByLevel(level);
 
         return sessionList;
+    }
+
+    public List<Session> getSessionsByOrder(int order) {
+        List<Session> sessionList = sessionMapper.getSessionByOrder(order);
+
+        return sessionList;
+    }
+
+    public int getSessionCount() {
+        return sessionMapper.getSessionByLevel(1).size()/2 + 2 +1;
     }
 }
