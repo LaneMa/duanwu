@@ -3,6 +3,7 @@ package com.duanwu.dwb.db;
 import com.duanwu.dwb.model.Session;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
@@ -16,6 +17,19 @@ public interface SessionMapper extends Mapper<Session> {
 
     @Select("select * from t_session where order_number = ${order_number}")
     List<Session> getSessionByOrder(@Param("order_number") int order_number);
+
+    @Select("select * from t_session where name = #{name} AND session = #{session}")
+    List<Session> getSessionOne(@Param("name") String name, @Param("session") String session);
+
+    @Update("update t_session set one = ${one}, two = ${two}, three = ${three}, score = ${score}, foul = ${foul}, over = ${over} where name = #{name} AND session = #{session}")
+    int updateSession(@Param("name") String name,
+                      @Param("session") String session,
+                      @Param("one") int one,
+                      @Param("two") int two,
+                      @Param("three") int three,
+                      @Param("score") int score,
+                      @Param("foul") int foul,
+                      @Param("over") int over);
 
     void truncate();
 }

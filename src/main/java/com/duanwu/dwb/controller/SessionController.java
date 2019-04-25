@@ -32,4 +32,12 @@ public class SessionController {
     public Object getSessionsCount() {
         return sessionService.getSessionCount();
     }
+
+    @GetMapping("/technical")
+    public void getSessionsByLevel(@Param("name") String name,
+                                     @Param("session") String session,
+                                     @Param("type") int type) {
+        //type--1:1分，2:2分，3:3分，4:犯规
+        sessionService.setSessionState(name, session, type);
+    }
 }
