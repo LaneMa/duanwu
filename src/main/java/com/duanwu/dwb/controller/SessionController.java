@@ -29,7 +29,7 @@ public class SessionController {
     }
 
     @GetMapping("/count")
-    public Object getSessionsByOrder() {
+    public Object getSessionsCount() {
         return sessionService.getSessionCount();
     }
 }
