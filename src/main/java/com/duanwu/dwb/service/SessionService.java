@@ -85,6 +85,7 @@ public class SessionService {
             levelRises.add(levelRise);
             if (levelRise.winCount > count) {
                 session.name = levelRise.name;
+                session.group_name = groupList.get(i).group_name;
                 count = levelRise.winCount;
             }
             if (i > 0) {
@@ -102,6 +103,7 @@ public class SessionService {
                 levelRise.totalScore = sessionMapper.getTotalScore(levelRise.name, groupList.get(i).group_name).totalScore;
                 if (levelRise.totalScore > score) {
                     session.name = levelRise.name;
+                    session.group_name = groupList.get(i).group_name;
                     score = levelRise.totalScore;
                 }
             }
@@ -143,7 +145,7 @@ public class SessionService {
             Session session = new Session();
             session.name = sessionList.get(i).name;
             session.game_time = new Date();
-            session.level = 2;
+            session.level = 3;
 
             session.order_number = order_number + 1;
             session.session = "G1";

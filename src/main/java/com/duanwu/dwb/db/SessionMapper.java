@@ -44,11 +44,11 @@ public interface SessionMapper extends Mapper<Session> {
     @Select("select * from t_session where score >= ${score} AND level = ${level}")
     List<Session> getSessionRise(@Param("score") int score, @Param("level") int level);
 
-    @Select("select count(*) from t_session where name = #{name} AND group = #{group} AND win = ${win}")
-    int getWinCount(@Param("name") String name, @Param("group") String group, @Param("win") int win);
+    @Select("select count(*) from t_session where name = #{name} AND group_name = #{group_name} AND win = ${win}")
+    int getWinCount(@Param("name") String name, @Param("group_name") String group_name, @Param("win") int win);
 
-    @Select("select sum(score) AS totalScore from t_session where name = #{name} AND group = #{group}")
-    LevelRise getTotalScore(@Param("name") String name, @Param("group") String group);
+    @Select("select sum(score) AS totalScore from t_session where name = #{name} AND group_name = #{group_name}")
+    LevelRise getTotalScore(@Param("name") String name, @Param("group_name") String group_name);
 
     void truncate();
 }
