@@ -42,16 +42,16 @@ public class SessionService {
         return sessionList;
     }
 
-    public int getSessionCount(int level) {
-        if (level == 1) {
-            return sessionMapper.getSessionByLevel(1).size()/2;
-        } else if (level == 2) {
-            return 2;
-        } else if (level == 3) {
-            return 1;
-        }
+    public int getSessionCount() {
+//        if (level == 1) {
+//            return sessionMapper.getSessionByLevel().size()/2;
+//        } else if (level == 2) {
+//            return 2;
+//        } else if (level == 3) {
+//            return 1;
+//        }
 
-        return 0;
+        return sessionMapper.getSessionCount() / 2;
     }
 
     public Session cloneSession(Session sessionObject) {
@@ -171,6 +171,22 @@ public class SessionService {
                 sessionNew.over);
     }
 
+    public void setOtherPlayerOn(String name, String session) {
+        Session sessionOther = sessionMapper.getSessionOther(name, session).get(0);
+        Session sessionNew = cloneSession(sessionOther);
+        sessionNew.over = 0;
+
+        sessionMapper.updateSession(sessionNew.name,
+                sessionNew.session,
+                sessionNew.one,
+                sessionNew.two,
+                sessionNew.three,
+                sessionNew.score,
+                sessionNew.win,
+                sessionNew.foul,
+                sessionNew.over);
+    }
+
     public void setSessionState(String name, String session, int type, int level) {
         Session sessionObject = sessionMapper.getSessionOne(name, session).get(0);
         Session sessionNew = cloneSession(sessionObject);
@@ -232,22 +248,19 @@ public class SessionService {
         }
         sessionNew.score = sessionNew.one*1 + sessionNew.two*2 + sessionNew.three*3;
         if (level == 1) {
-            if (sessionNew.score >= 7) {
-                sessionNew.over = 1;
-                sessionNew.win = 1;
-                setOtherPlayerOver(sessionNew.name, sessionNew.session);
-            } else {
+            if (sessionNew.score < 7 && sessionObject.score >= 7) {
+                sessionNew.over = 0;
                 sessionNew.win = 0;
+                setOtherPlayerOn(sessionNew.name, sessionNew.session);
             }
-        } else if ((level == 2) || (level == 3)) {
-            if (sessionNew.score >= 11) {
-                sessionNew.over = 1;
-                sessionNew.win = 1;
-                setOtherPlayerOver(sessionNew.name, sessionNew.session);
-            } else {
+        } else if((level == 2) || (level == 3)) {
+            if (sessionNew.score < 11 && sessionObject.score >= 11) {
+                sessionNew.over = 0;
                 sessionNew.win = 0;
+                setOtherPlayerOn(sessionNew.name, sessionNew.session);
             }
         }
+
         sessionMapper.updateSession(name,
                 session,
                 sessionNew.one,

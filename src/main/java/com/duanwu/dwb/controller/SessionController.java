@@ -29,8 +29,8 @@ public class SessionController {
     }
 
     @GetMapping("/count")
-    public Object getSessionsCount(@Param("level") int level) {
-        return sessionService.getSessionCount(level);
+    public Object getSessionsCount() {
+        return sessionService.getSessionCount();
     }
 
     //加

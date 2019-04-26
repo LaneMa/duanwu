@@ -52,4 +52,8 @@ public interface SessionMapper extends Mapper<Session> {
     LevelRise getTotalScore(@Param("name") String name, @Param("group_name") String group_name);
 
     void truncate();
+
+    @Select("select ifnull(count(1),0) from t_session")
+    int getSessionCount();
+
 }
