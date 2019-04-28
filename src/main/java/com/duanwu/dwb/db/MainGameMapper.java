@@ -16,11 +16,14 @@ public interface MainGameMapper extends Mapper<MainGame> {
                       @Param("two") int two,
                       @Param("three") int three,
                       @Param("foul") int foul,
-                      @Param("over") int backboard,
+                      @Param("backboard") int backboard,
                       @Param("year") int year);
 
     @Select("select * from t_main_game where team = #{team} AND year = ${year}")
     List<MainGame> getMainGameByTeam(@Param("team") String team, @Param("year") int year);
+
+    @Select("select * from t_main_game where year = ${year}")
+    List<MainGame> getMainGameByMain(@Param("year") int year);
 
     @Select("select * from t_main_game where name = #{name} AND year = ${year}")
     List<MainGame> getMainGameByName(@Param("name") String name, @Param("year") int year);
