@@ -1,6 +1,7 @@
 package com.duanwu.dwb.service;
 
 import com.duanwu.dwb.db.MainGameMapper;
+import com.duanwu.dwb.db.QuarterMapper;
 import com.duanwu.dwb.model.MainGame;
 import com.duanwu.dwb.model.MainGameScore;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,16 @@ public class MainGameService {
     @Autowired
     MainGameMapper mainGameMapper;
 
+    @Autowired
+    QuarterMapper quarterMapper;
+
     public List<MainGameScore> getMainGameByTeam(String team) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         Date date = new Date();
         int year = Integer.parseInt(sdf.format(date));
 
         List<MainGameScore> mainGameScores = new ArrayList<>();
-        if ("ÕýÈü".equals(team)) {
+        if ("æ­£èµ›".equals(team)) {
             List<MainGame> mainGames = mainGameMapper.getMainGameByMain(year);
 
             for (int i = 0; i < mainGames.size(); i++) {
@@ -122,5 +126,33 @@ public class MainGameService {
         }
 
         return mainGameScore;
+    }
+
+    public int getQuarter() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        return quarterMapper.getQuarter(year).quarter;
+    }
+
+    public void setQuarter(int quarter) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        quarterMapper.updateQuarter(quarter, year);
+    }
+
+    public void increaseData(int type, String name) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        List<MainGame> mainGames = mainGameMapper.getMainGameByName(name, year);
+    }
+
+    public void reduceData() {
+
     }
 }

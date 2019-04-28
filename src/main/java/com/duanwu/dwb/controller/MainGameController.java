@@ -22,4 +22,14 @@ public class MainGameController {
     public Object getMainByName(@Param("name") String name) {
         return mainGameService.getMainGameByName(name);
     }
+
+    @GetMapping("/quarter")
+    public Object getQuarter() {
+        return mainGameService.getQuarter();
+    }
+
+    @GetMapping("/quarter/set")
+    public void setQuarter(@Param("quarter") int quarter) {
+        mainGameService.setQuarter(quarter);
+    }
 }
