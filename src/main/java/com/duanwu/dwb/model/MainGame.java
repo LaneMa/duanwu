@@ -20,4 +20,5 @@ public class MainGame {
     public Date game_time;
 
     public int quarter = 1;
+    public int year;
 }

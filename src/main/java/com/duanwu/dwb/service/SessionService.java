@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,19 +26,31 @@ public class SessionService {
     GroupMapper groupMapper;
 
     public List<Session> getSessions() {
-        List<Session> sessionList = sessionMapper.getSessionAllByLevel();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        List<Session> sessionList = sessionMapper.getSessionAllByLevel(year);
 
         return sessionList;
     }
 
     public List<Session> getSessionsByLevel(int level) {
-        List<Session> sessionList = sessionMapper.getSessionByLevel(level);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        List<Session> sessionList = sessionMapper.getSessionByLevel(level, year);
 
         return sessionList;
     }
 
     public List<Session> getSessionsByOrder(int order) {
-        List<Session> sessionList = sessionMapper.getSessionByOrder(order);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        List<Session> sessionList = sessionMapper.getSessionByOrder(order, year);
 
         return sessionList;
     }
@@ -51,7 +64,11 @@ public class SessionService {
 //            return 1;
 //        }
 
-        return sessionMapper.getSessionCount() / 2;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        return sessionMapper.getSessionCount(year) / 2;
     }
 
     public Session cloneSession(Session sessionObject) {
@@ -73,7 +90,11 @@ public class SessionService {
     }
 
     public Session getRiseLevel1(String group) {
-        List<Group> groupList = groupMapper.getGroupsByName(group);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        List<Group> groupList = groupMapper.getGroupsByName(group, year);
         List<LevelRise> levelRises = new ArrayList<>();
         Session session = new Session();
         int count = 0;
@@ -81,7 +102,7 @@ public class SessionService {
         for (int i = 0; i < groupList.size(); i++) {
             LevelRise levelRise = new LevelRise();
             levelRise.name = groupList.get(i).player_name;
-            levelRise.winCount = sessionMapper.getWinCount(levelRise.name, groupList.get(i).group_name, 1);
+            levelRise.winCount = sessionMapper.getWinCount(levelRise.name, groupList.get(i).group_name, 1, year);
             levelRises.add(levelRise);
             if (levelRise.winCount > count) {
                 session.name = levelRise.name;
@@ -100,7 +121,7 @@ public class SessionService {
             for (int i = 0; i < groupList.size(); i++) {
                 LevelRise levelRise = new LevelRise();
                 levelRise.name = groupList.get(i).player_name;
-                levelRise.totalScore = sessionMapper.getTotalScore(levelRise.name, groupList.get(i).group_name).totalScore;
+                levelRise.totalScore = sessionMapper.getTotalScore(levelRise.name, groupList.get(i).group_name, year).totalScore;
                 if (levelRise.totalScore > score) {
                     session.name = levelRise.name;
                     session.group_name = groupList.get(i).group_name;
@@ -118,12 +139,17 @@ public class SessionService {
             sessionList.add(getRiseLevel1(groupName[j]));
         }
 
-        int order_number = sessionMapper.getSessionByLevel(1).size()/2;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        int order_number = sessionMapper.getSessionByLevel(1, year).size()/2;
         for(int i = 0; i < sessionList.size(); i++) {
             Session session = new Session();
             session.name = sessionList.get(i).name;
             session.game_time = new Date();
             session.level = 2;
+            session.year = year;
             if ((sessionList.get(i).group_name.equals("A")) || (sessionList.get(i).group_name.equals("C"))) {
                 session.order_number = order_number + 1;
                 session.session = "E1";
@@ -139,8 +165,12 @@ public class SessionService {
     }
 
     public void setSessionLevel3() {
-        List<Session> sessionList = sessionMapper.getSessionRise(11, 2);
-        int order_number = sessionMapper.getSessionByLevel(1).size()/2 + 2;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        List<Session> sessionList = sessionMapper.getSessionRise(11, 2, year);
+        int order_number = sessionMapper.getSessionByLevel(1, year).size()/2 + 2;
         for(int i = 0; i < sessionList.size(); i++) {
             Session session = new Session();
             session.name = sessionList.get(i).name;
@@ -150,13 +180,18 @@ public class SessionService {
             session.order_number = order_number + 1;
             session.session = "G1";
             session.group_name = "G";
+            session.year = year;
 
             sessionMapper.insert(session);
         }
     }
 
     public void setOtherPlayerOver(String name, String session) {
-        Session sessionOther = sessionMapper.getSessionOther(name, session).get(0);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        Session sessionOther = sessionMapper.getSessionOther(name, session, year).get(0);
         Session sessionNew = cloneSession(sessionOther);
         sessionNew.over = 1;
 
@@ -168,11 +203,16 @@ public class SessionService {
                 sessionNew.score,
                 sessionNew.win,
                 sessionNew.foul,
-                sessionNew.over);
+                sessionNew.over,
+                year);
     }
 
     public void setOtherPlayerOn(String name, String session) {
-        Session sessionOther = sessionMapper.getSessionOther(name, session).get(0);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        Session sessionOther = sessionMapper.getSessionOther(name, session, year).get(0);
         Session sessionNew = cloneSession(sessionOther);
         sessionNew.over = 0;
 
@@ -184,11 +224,16 @@ public class SessionService {
                 sessionNew.score,
                 sessionNew.win,
                 sessionNew.foul,
-                sessionNew.over);
+                sessionNew.over,
+                year);
     }
 
     public void setSessionState(String name, String session, int type, int level) {
-        Session sessionObject = sessionMapper.getSessionOne(name, session).get(0);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        Session sessionObject = sessionMapper.getSessionOne(name, session, year).get(0);
         Session sessionNew = cloneSession(sessionObject);
         if (type == 1) {
             sessionNew.one = sessionObject.one + 1;
@@ -221,21 +266,30 @@ public class SessionService {
                 sessionNew.score,
                 sessionNew.win,
                 sessionNew.foul,
-                sessionNew.over);
+                sessionNew.over,
+                year);
     }
 
     public void riseLevel(int level) {
-        if (sessionMapper.getSessionOverCount(0, level) <= 0) {
-            if (level == 1) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        if (sessionMapper.getSessionOverCount(0, level, year) <= 0) {
+            if ((level == 1) && (sessionMapper.getSessionByLevel( 2, year).size() <= 0)) {
                 setSessionLevel2();
-            } else if (level == 2) {
+            } else if ((level == 2) && (sessionMapper.getSessionByLevel( 3, year).size() <= 0)) {
                 setSessionLevel3();
             }
         }
     }
 
     public void subtractSessionsState(String name, String session, int type, int level) {
-        Session sessionObject = sessionMapper.getSessionOne(name, session).get(0);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        Session sessionObject = sessionMapper.getSessionOne(name, session, year).get(0);
         Session sessionNew = cloneSession(sessionObject);
         if (type == 1) {
             sessionNew.one = sessionObject.one - 1;
@@ -269,6 +323,7 @@ public class SessionService {
                 sessionNew.score,
                 sessionNew.win,
                 sessionNew.foul,
-                sessionNew.over);
+                sessionNew.over,
+                year);
     }
 }

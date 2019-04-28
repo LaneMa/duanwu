@@ -13,4 +13,6 @@ public class Group {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     public Date game_time;
+
+    public int year;
 }
