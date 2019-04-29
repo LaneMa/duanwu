@@ -14,6 +14,9 @@ public interface PlayersMapper extends Mapper<Players> {
     @Select("select * from t_players where name = #{name}")
     Players getPlayerByName(@Param("name") String name);
 
+    @Select("select * from t_players where team = #{team}")
+    Players getPlayerByTeam(@Param("team") String team);
+
     @Select("select * from t_players")
     List<Players> getPlayers();
 

@@ -24,6 +24,12 @@ public class PlayersService {
         return players;
     }
 
+    public Players getPlayersByTeam(String team) {
+        Players players = playersMapper.getPlayerByTeam(team);
+
+        return players;
+    }
+
     public List<Players> getPlayers() {
         List<Players> playersList = playersMapper.getPlayers();
 

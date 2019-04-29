@@ -33,4 +33,7 @@ public interface MainGameMapper extends Mapper<MainGame> {
 
     @Select("select * from t_main_game where quarter = ${quarter} AND year = ${year}")
     List<MainGame> getMainGameByQuarter(@Param("quarter") int quarter, @Param("year") int year);
+
+    @Select("select * from t_main_game where year = ${year}")
+    List<MainGame> getMainGame(@Param("year") int year);
 }

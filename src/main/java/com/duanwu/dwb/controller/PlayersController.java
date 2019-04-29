@@ -28,6 +28,12 @@ public class PlayersController {
         return  value;
     }
 
+    @GetMapping("/team")
+    public Object getPlayersByteam(@Param("team") String team) {
+        Players value = playersService.getPlayersByTeam(team);
+        return  value;
+    }
+
     @GetMapping
     public Object getPlayers() {
         List<Players> value = playersService.getPlayers();
