@@ -19,7 +19,7 @@ public class PlayersService {
     }
 
     public Players getPlayersByName(String name) {
-        Players players = playersMapper.getPlayerByName(name);
+        Players players = playersMapper.getPlayerByName(name).get(0);
 
         return players;
     }

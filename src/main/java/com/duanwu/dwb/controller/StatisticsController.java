@@ -16,4 +16,9 @@ public class StatisticsController {
     public Object getSoloKing() {
         return statisticsService.getSoloKing();
     }
+
+    @GetMapping("/three")
+    public Object getThreeKing() {
+        return statisticsService.getThreeKing();
+    }
 }

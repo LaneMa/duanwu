@@ -1,8 +1,6 @@
 package com.duanwu.dwb.service;
 
-import com.duanwu.dwb.db.MainGameMapper;
-import com.duanwu.dwb.db.SessionMapper;
-import com.duanwu.dwb.db.SloganMapper;
+import com.duanwu.dwb.db.*;
 import com.duanwu.dwb.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +20,12 @@ public class StatisticsService {
 
     @Autowired
     MainGameMapper mainGameMapper;
+
+    @Autowired
+    MainResultMapper mainResultMapper;
+
+    @Autowired
+    PlayersMapper playersMapper;
 
     public Solo getSoloKing() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
@@ -70,9 +74,9 @@ public class StatisticsService {
             }
             if (isContain == false) {
                 Three three1 = new Three();
-                three.name = mainGames.get(i).name;
-                three.year = year;
-                three.three = mainGames.get(i).three;
+                three1.name = mainGames.get(i).name;
+                three1.year = year;
+                three1.three = mainGames.get(i).three;
                 threeList.add(three1);
             }
         }
@@ -91,6 +95,29 @@ public class StatisticsService {
                 }
                 threeList1.add(threeList.get(m));
                 threeList1.add(threeList.get(n));
+            }
+        }
+
+        if (threeList1.size() == 1) {
+            three.name = threeList1.get(0).name;
+            three.three = threeList1.get(0).three;
+        } else if (threeList1.size() > 1) {
+            Boolean isWin = false;
+            for (int i = 0; i < threeList1.size(); i++) {
+                String team = playersMapper.getPlayerByName(threeList1.get(i).name).get(0).team;
+                List<MainResult> mainResultList = mainResultMapper.getMainResultByName(team, year);
+                if (mainResultList.size() != 0) {
+                    if(mainResultList.get(0).win == 1) {
+                        three.name = threeList1.get(i).name;
+                        three.three = threeList1.get(i).three;
+                        isWin = true;
+                    }
+
+                }
+            }
+            if (isWin == false) {
+                three.name = threeList1.get(0).name;
+                three.three = threeList1.get(0).three;
             }
         }
 

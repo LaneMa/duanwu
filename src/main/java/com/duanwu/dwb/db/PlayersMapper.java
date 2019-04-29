@@ -12,7 +12,7 @@ public interface PlayersMapper extends Mapper<Players> {
     Players getPlayerById(@Param("id") int id);
 
     @Select("select * from t_players where name = #{name}")
-    Players getPlayerByName(@Param("name") String name);
+    List<Players> getPlayerByName(@Param("name") String name);
 
     @Select("select * from t_players where team = #{team}")
     List<Players> getPlayerByTeam(@Param("team") String team);
