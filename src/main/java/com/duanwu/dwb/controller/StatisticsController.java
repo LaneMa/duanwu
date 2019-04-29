@@ -21,4 +21,9 @@ public class StatisticsController {
     public Object getThreeKing() {
         return statisticsService.getThreeKing();
     }
+
+    @GetMapping("/backboard")
+    public Object getBackboardKing() {
+        return statisticsService.getBackboardKing();
+    }
 }

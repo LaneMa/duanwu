@@ -125,4 +125,75 @@ public class StatisticsService {
 
         return three;
     }
+
+    public Backboard getBackboardKing() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        Backboard backboard = new Backboard();
+        backboard.year = year;
+        List<MainGame> mainGames = mainGameMapper.getMainGame(year);
+        List<Backboard> backboardList = new ArrayList<>();
+        for (int i = 0; i < mainGames.size(); i++) {
+            Boolean isContain = false;
+            for (int j = 0; j < backboardList.size(); j++) {
+                if (backboardList.get(j).name.equals(mainGames.get(i).name)) {
+                    backboardList.get(j).backboard += mainGames.get(i).backboard;
+                    isContain = true;
+                }
+            }
+            if (isContain == false) {
+                Backboard backboard1 = new Backboard();
+                backboard1.name = mainGames.get(i).name;
+                backboard1.year = year;
+                backboard1.backboard = mainGames.get(i).backboard;
+                backboardList.add(backboard1);
+            }
+        }
+
+        List<Backboard> Backboard1 = new ArrayList<>();
+        for (int m = 1; m < backboardList.size(); m++) {
+            int n = m - 1;
+            if (backboardList.get(m).backboard > backboardList.get(n).backboard) {
+                for (int r = 0; r < Backboard1.size(); r++) {
+                    Backboard1.remove(r);
+                }
+                Backboard1.add(backboardList.get(m));
+            } else if (backboardList.get(m).backboard == backboardList.get(n).backboard) {
+                for (int r = 0; r < Backboard1.size(); r++) {
+                    Backboard1.remove(r);
+                }
+                Backboard1.add(backboardList.get(m));
+                Backboard1.add(backboardList.get(n));
+            }
+        }
+
+        if (Backboard1.size() == 1) {
+            backboard.name = Backboard1.get(0).name;
+            backboard.backboard = Backboard1.get(0).backboard;
+        } else if (Backboard1.size() > 1) {
+            Boolean isWin = false;
+            for (int i = 0; i < Backboard1.size(); i++) {
+                String team = playersMapper.getPlayerByName(Backboard1.get(i).name).get(0).team;
+                List<MainResult> mainResultList = mainResultMapper.getMainResultByName(team, year);
+                if (mainResultList.size() != 0) {
+                    if(mainResultList.get(0).win == 1) {
+                        backboard.name = Backboard1.get(i).name;
+                        backboard.backboard = Backboard1.get(i).backboard;
+                        isWin = true;
+                    }
+
+                }
+            }
+            if (isWin == false) {
+                backboard.name = Backboard1.get(0).name;
+                backboard.backboard = Backboard1.get(0).backboard;
+            }
+        }
+
+        backboard.slogan = sloganMapper.getSloganByName(year, backboard.name).get(0).backboard;
+
+        return backboard;
+    }
 }
