@@ -144,15 +144,55 @@ public class MainGameService {
         quarterMapper.updateQuarter(quarter, year);
     }
 
-    public void increaseData(int type, String name) {
+    public void increaseData(int type, String name, int quarter) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         Date date = new Date();
         int year = Integer.parseInt(sdf.format(date));
 
-        List<MainGame> mainGames = mainGameMapper.getMainGameByName(name, year);
+        MainGame mainGame = mainGameMapper.getMainGameByNameByQuarter(name, year, quarter);
+        int one = mainGame.one;
+        int two = mainGame.two;
+        int three = mainGame.three;
+        int foul = mainGame.foul;
+        int backboard = mainGame.backboard;
+        if (type == 1) {
+            one += 1;
+        } else if (type == 2) {
+            two += 1;
+        } else if (type == 3) {
+            three += 1;
+        } else if (type == 4) {
+            foul += 1;
+        } else if (type == 5) {
+            backboard += 1;
+        }
+
+        mainGameMapper.updateMainGame(name, quarter, one, two, three, foul, backboard, year);
     }
 
-    public void reduceData() {
+    public void reduceData(int type, String name, int quarter) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
 
+        MainGame mainGame = mainGameMapper.getMainGameByNameByQuarter(name, year, quarter);
+        int one = mainGame.one;
+        int two = mainGame.two;
+        int three = mainGame.three;
+        int foul = mainGame.foul;
+        int backboard = mainGame.backboard;
+        if (type == 1) {
+            one -= 1;
+        } else if (type == 2) {
+            two -= 1;
+        } else if (type == 3) {
+            three -= 1;
+        } else if (type == 4) {
+            foul -= 1;
+        } else if (type == 5) {
+            backboard -= 1;
+        }
+
+        mainGameMapper.updateMainGame(name, quarter, one, two, three, foul, backboard, year);
     }
 }

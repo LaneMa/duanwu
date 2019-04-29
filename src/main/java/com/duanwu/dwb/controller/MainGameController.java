@@ -32,4 +32,16 @@ public class MainGameController {
     public void setQuarter(@Param("quarter") int quarter) {
         mainGameService.setQuarter(quarter);
     }
+
+    @GetMapping("/increase")
+    public void increase(@Param("type") int type, @Param("name") String name, @Param("quarter") int quarter) {
+        //type--1:1分，2:2分，3:3分，4:犯规，5:篮板
+        mainGameService.increaseData(type, name, quarter);
+    }
+
+    @GetMapping("/reduce")
+    public void reduce(@Param("type") int type, @Param("name") String name, @Param("quarter") int quarter) {
+        //type--1:1分，2:2分，3:3分，4:犯规，5:篮板
+        mainGameService.reduceData(type, name, quarter);
+    }
 }
