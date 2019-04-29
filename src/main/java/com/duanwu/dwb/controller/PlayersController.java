@@ -29,8 +29,8 @@ public class PlayersController {
     }
 
     @GetMapping("/team")
-    public Object getPlayersByteam(@Param("team") String team) {
-        Players value = playersService.getPlayersByTeam(team);
+    public Object getPlayersByTeam(@Param("team") String team) {
+        List<Players> value = playersService.getPlayersByTeam(team);
         return  value;
     }
 
