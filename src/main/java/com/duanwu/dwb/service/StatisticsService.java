@@ -121,6 +121,8 @@ public class StatisticsService {
             }
         }
 
+        three.slogan = sloganMapper.getSloganByName(year, three.name).get(0).three;
+
         return three;
     }
 }
