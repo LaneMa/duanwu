@@ -31,4 +31,9 @@ public class StatisticsController {
     public Object getChampion() {
         return statisticsService.getChampion();
     }
+
+    @GetMapping("/statistics")
+    public Object getStatistics() {
+        return statisticsService.getStatistics();
+    }
 }

@@ -234,4 +234,70 @@ public class StatisticsService {
 
         return champion;
     }
+
+    public List<Champion> getStatistics() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        List<MainGame> mainGames = mainGameMapper.getMainGameByTeam("湘北", year);
+        List<ChampionPlayer> championPlayers = new ArrayList<>();
+        Champion champion1 = new Champion();
+        champion1.team = "湘北";
+        champion1.year = year;
+        for (int i = 0; i < mainGames.size(); i++) {
+            Boolean isContain = false;
+            for (int j = 0; j < championPlayers.size(); j++) {
+                if (championPlayers.get(j).name.equals(mainGames.get(i).name)) {
+                    championPlayers.get(j).score += mainGames.get(i).one*1 + mainGames.get(i).two*2 + mainGames.get(i).three*3;
+                    championPlayers.get(j).backboard += mainGames.get(i).backboard;
+                    isContain = true;
+                }
+            }
+            if (isContain == false) {
+                ChampionPlayer championPlayer = new ChampionPlayer();
+                championPlayer.name = mainGames.get(i).name;
+                championPlayer.team = mainGames.get(i).team;
+                championPlayer.score = mainGames.get(i).one*1 + mainGames.get(i).two*2 + mainGames.get(i).three*3;
+                championPlayer.backboard = mainGames.get(i).backboard;
+                championPlayers.add(championPlayer);
+            }
+        }
+
+        List<MainGame> mainGames2 = mainGameMapper.getMainGameByTeam("狼群", year);
+        List<ChampionPlayer> championPlayers2 = new ArrayList<>();
+        Champion champion2 = new Champion();
+        champion2.team = "狼群";
+        champion2.year = year;
+        for (int i = 0; i < mainGames2.size(); i++) {
+            Boolean isContain = false;
+            for (int j = 0; j < championPlayers2.size(); j++) {
+                if (championPlayers2.get(j).name.equals(mainGames2.get(i).name)) {
+                    championPlayers2.get(j).score += mainGames2.get(i).one*1 + mainGames2.get(i).two*2 + mainGames2.get(i).three*3;
+                    championPlayers2.get(j).backboard += mainGames2.get(i).backboard;
+                    isContain = true;
+                }
+            }
+            if (isContain == false) {
+                ChampionPlayer championPlayer = new ChampionPlayer();
+                championPlayer.name = mainGames2.get(i).name;
+                championPlayer.team = mainGames2.get(i).team;
+                championPlayer.score = mainGames2.get(i).one*1 + mainGames2.get(i).two*2 + mainGames2.get(i).three*3;
+                championPlayer.backboard = mainGames2.get(i).backboard;
+                championPlayers2.add(championPlayer);
+            }
+        }
+
+        champion1.championPlayers = championPlayers;
+        champion2.championPlayers = championPlayers2;
+
+        champion1.slogan = sloganMapper.getSloganByName(year, champion1.team).get(0).champion;
+        champion2.slogan = sloganMapper.getSloganByName(year, champion2.team).get(0).champion;
+
+        List<Champion> champions = new ArrayList<>();
+        champions.add(champion1);
+        champions.add(champion2);
+
+        return champions;
+    }
 }
