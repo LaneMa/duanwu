@@ -196,4 +196,42 @@ public class StatisticsService {
 
         return backboard;
     }
+
+    public Champion getChampion() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        MainResult mainResult = mainResultMapper.getMainResultByWin(1, year).get(0);
+        Champion champion = new Champion();
+
+        champion.team = mainResult.name;
+        champion.year = year;
+        champion.slogan = sloganMapper.getSloganByName(year, champion.team).get(0).champion;
+
+        List<MainGame> mainGames = mainGameMapper.getMainGameByTeam(champion.team, year);
+        List<ChampionPlayer> championPlayers = new ArrayList<>();
+        for (int i = 0; i < mainGames.size(); i++) {
+            Boolean isContain = false;
+            for (int j = 0; j < championPlayers.size(); j++) {
+                if (championPlayers.get(j).name.equals(mainGames.get(i).name)) {
+                    championPlayers.get(j).score += mainGames.get(i).one*1 + mainGames.get(i).two*2 + mainGames.get(i).three*3;
+                    championPlayers.get(j).backboard += mainGames.get(i).backboard;
+                    isContain = true;
+                }
+            }
+            if (isContain == false) {
+                ChampionPlayer championPlayer = new ChampionPlayer();
+                championPlayer.name = mainGames.get(i).name;
+                championPlayer.team = champion.team;
+                championPlayer.score = mainGames.get(i).one*1 + mainGames.get(i).two*2 + mainGames.get(i).three*3;
+                championPlayer.backboard = mainGames.get(i).backboard;
+                championPlayers.add(championPlayer);
+            }
+        }
+
+        champion.championPlayers = championPlayers;
+
+        return champion;
+    }
 }

@@ -26,4 +26,9 @@ public class StatisticsController {
     public Object getBackboardKing() {
         return statisticsService.getBackboardKing();
     }
+
+    @GetMapping("/champion")
+    public Object getChampion() {
+        return statisticsService.getChampion();
+    }
 }

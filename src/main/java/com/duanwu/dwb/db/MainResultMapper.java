@@ -17,4 +17,7 @@ public interface MainResultMapper extends Mapper<MainResult> {
                       @Param("score") int score,
                       @Param("win") int win,
                       @Param("year") int year);
+
+    @Select("select * from t_main_result where win = ${win} AND year = ${year}")
+    List<MainResult> getMainResultByWin(@Param("win") int win, @Param("year") int year);
 }
