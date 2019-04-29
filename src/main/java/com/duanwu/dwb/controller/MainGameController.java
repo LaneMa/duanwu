@@ -44,4 +44,10 @@ public class MainGameController {
         //type--1:1分，2:2分，3:3分，4:犯规，5:篮板
         mainGameService.reduceData(type, name, quarter);
     }
+
+    @GetMapping("/over")
+    public void gameOver() {
+        mainGameService.gameOver();
+    }
+
 }
