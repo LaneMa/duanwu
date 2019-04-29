@@ -57,4 +57,10 @@ public interface SessionMapper extends Mapper<Session> {
     @Select("select ifnull(count(1),0) from t_session where year = ${year}")
     int getSessionCount(@Param("year") int year);
 
+    @Select("select * from t_session where year = ${year} AND group_name = #{group_name} AND win = ${win}")
+    List<Session> getSessionKing(@Param("year") int year, @Param("group_name") String group_name, @Param("win") int win);
+
+    @Select("select * from t_session where year = ${year} AND name = #{name}")
+    List<Session> getSessionByName(@Param("year") int year, @Param("name") String name);
+
 }

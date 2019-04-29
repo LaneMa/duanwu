@@ -35,13 +35,13 @@ public class MainGameController {
 
     @GetMapping("/increase")
     public void increase(@Param("type") int type, @Param("name") String name, @Param("quarter") int quarter) {
-        //type--1:1·Ö£¬2:2·Ö£¬3:3·Ö£¬4:·¸¹æ£¬5:Àº°å
+        //type--1:1åˆ†ï¼Œ2:2åˆ†ï¼Œ3:3åˆ†ï¼Œ4:çŠ¯è§„ï¼Œ5:ç¯®æ¿
         mainGameService.increaseData(type, name, quarter);
     }
 
     @GetMapping("/reduce")
     public void reduce(@Param("type") int type, @Param("name") String name, @Param("quarter") int quarter) {
-        //type--1:1·Ö£¬2:2·Ö£¬3:3·Ö£¬4:·¸¹æ£¬5:Àº°å
+        //type--1:1åˆ†ï¼Œ2:2åˆ†ï¼Œ3:3åˆ†ï¼Œ4:çŠ¯è§„ï¼Œ5:ç¯®æ¿
         mainGameService.reduceData(type, name, quarter);
     }
 }
