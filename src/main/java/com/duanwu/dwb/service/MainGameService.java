@@ -263,7 +263,7 @@ public class MainGameService {
         mainResult.year = year;
         MainResult mainResult2 = new MainResult();
         mainResult2.name = "狼群";
-        mainResult2.score = mainGameScore.score;
+        mainResult2.score = mainGameScore2.score;
         mainResult2.year = year;
         if (mainGameScore.score > mainGameScore2.score) {
             mainResult.win = 1;
