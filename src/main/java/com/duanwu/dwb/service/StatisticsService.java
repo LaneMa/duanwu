@@ -44,9 +44,13 @@ public class StatisticsService {
         Date date = new Date();
         int year = Integer.parseInt(sdf.format(date));
 
-        Session session = sessionMapper.getSessionKing(year, "G", 1).get(0);
-
         Solo solo = new Solo();
+        List<Session> sessionList1 = sessionMapper.getSessionKing(year, "G", 1);
+        if (sessionList1.size() == 0){
+            return solo;
+        }
+        Session session = sessionList1.get(0);
+
         solo.year = year;
         solo.name = session.name;
 
@@ -338,6 +342,7 @@ public class StatisticsService {
                 mvp.ticket = ticketList.get(i).ticket;
             }
         }
+        mvpMapper.truncate();//
         mvpMapper.insert(mvp);
     }
 
@@ -347,6 +352,7 @@ public class StatisticsService {
         int year = Integer.parseInt(sdf.format(date));
 
         MvpSlogan mvpSlogan = new MvpSlogan();
+        mvpSlogan.year = year;
         List<Mvp> mvpList = mvpMapper.getMvp(year);
         if (mvpList.size() == 0) {
             return mvpSlogan;
