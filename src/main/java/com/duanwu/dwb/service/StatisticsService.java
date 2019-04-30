@@ -27,6 +27,12 @@ public class StatisticsService {
     @Autowired
     PlayersMapper playersMapper;
 
+    @Autowired
+    TicketMapper ticketMapper;
+
+    @Autowired
+    MvpMapper mvpMapper;
+
     public Solo getSoloKing() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         Date date = new Date();
@@ -299,5 +305,43 @@ public class StatisticsService {
         champions.add(champion2);
 
         return champions;
+    }
+
+    public void setTicket(List<Ticket> ticketList) {
+        ticketMapper.truncate();//
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        Mvp mvp = new Mvp();
+        mvp.year = year;
+        for (int i = 0; i < ticketList.size(); i++) {
+            ticketList.get(i).year = year;
+            ticketMapper.insert(ticketList.get(i));
+            if (mvp.ticket < ticketList.get(i).ticket) {
+                mvp.name = ticketList.get(i).name;
+                mvp.ticket = ticketList.get(i).ticket;
+            }
+        }
+        mvpMapper.insert(mvp);
+    }
+
+    public MvpSlogan getMvp() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        MvpSlogan mvpSlogan = new MvpSlogan();
+        List<Mvp> mvpList = mvpMapper.getMvp(year);
+        if (mvpList.size() == 0) {
+            return mvpSlogan;
+        } else {
+            Mvp mvp = mvpList.get(0);
+            mvpSlogan.name = mvp.name;
+            mvpSlogan.slogan = sloganMapper.getSloganByName(year, mvpSlogan.name).get(0).mvp;
+        }
+
+        return mvpSlogan;
     }
 }
