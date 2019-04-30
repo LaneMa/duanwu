@@ -1,5 +1,6 @@
 package com.duanwu.dwb.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.duanwu.dwb.model.Ticket;
 import com.duanwu.dwb.service.StatisticsService;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/statistics")
@@ -42,7 +44,8 @@ public class StatisticsController {
     }
 
     @PostMapping("/ticket")
-    public void setTicket(@RequestBody List<Ticket> ticketList) {
+    public void setTicket(@RequestBody Map<String, String> str) {
+        List<Ticket> ticketList = JSON.parseArray(str.get("ticketList"),Ticket.class);
         statisticsService.setTicket(ticketList);
     }
 
