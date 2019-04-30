@@ -251,7 +251,7 @@ public class MainGameService {
         MainGameScore mainGameScore2 = new MainGameScore();
         mainGameScore2.name = team;
         mainGameScore2.backboard = backboard;
-        mainGameScore2.score = score;
+        mainGameScore2.score = score2;
         mainGameScore2.foul = foul;
         mainGameScore2.one = one;
         mainGameScore2.two = two;
