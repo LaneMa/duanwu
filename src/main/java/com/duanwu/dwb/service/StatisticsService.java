@@ -33,6 +33,12 @@ public class StatisticsService {
     @Autowired
     MvpMapper mvpMapper;
 
+    @Autowired
+    ThreeKingMapper threeKingMapper;
+
+    @Autowired
+    BackboardKingMapper backboardKingMapper;
+
     public Solo getSoloKing() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         Date date = new Date();
@@ -88,19 +94,16 @@ public class StatisticsService {
         }
 
         List<Three> threeList1 = new ArrayList<>();
+        threeList1.add(threeList.get(0));
         for (int m = 1; m < threeList.size(); m++) {
-            int n = m - 1;
-            if (threeList.get(m).three > threeList.get(n).three) {
-                for (int r = 0; r < threeList1.size(); r++) {
-                    threeList1.remove(r);
+            if (threeList.get(m).three > threeList1.get(0).three) {
+                int t = threeList1.size();
+                for (int r = 0; r < t; r++) {
+                    threeList1.remove(0);
                 }
                 threeList1.add(threeList.get(m));
-            } else if (threeList.get(m).three == threeList.get(n).three) {
-                for (int r = 0; r < threeList1.size(); r++) {
-                    threeList1.remove(r);
-                }
+            } else if (threeList.get(m).three == threeList1.get(0).three) {
                 threeList1.add(threeList.get(m));
-                threeList1.add(threeList.get(n));
             }
         }
 
@@ -128,6 +131,13 @@ public class StatisticsService {
         }
 
         three.slogan = sloganMapper.getSloganByName(year, three.name).get(0).three;
+
+        threeKingMapper.truncate();//
+        ThreeKing threeKing = new ThreeKing();
+        threeKing.year = year;
+        threeKing.name = three.name;
+        threeKing.count = three.three;
+        threeKingMapper.insert(threeKing);
 
         return three;
     }
@@ -159,19 +169,16 @@ public class StatisticsService {
         }
 
         List<Backboard> Backboard1 = new ArrayList<>();
+        Backboard1.add(backboardList.get(0));
         for (int m = 1; m < backboardList.size(); m++) {
-            int n = m - 1;
-            if (backboardList.get(m).backboard > backboardList.get(n).backboard) {
-                for (int r = 0; r < Backboard1.size(); r++) {
-                    Backboard1.remove(r);
+            if (backboardList.get(m).backboard > Backboard1.get(0).backboard) {
+                int t = Backboard1.size();
+                for (int r = 0; r < t; r++) {
+                    Backboard1.remove(0);
                 }
                 Backboard1.add(backboardList.get(m));
-            } else if (backboardList.get(m).backboard == backboardList.get(n).backboard) {
-                for (int r = 0; r < Backboard1.size(); r++) {
-                    Backboard1.remove(r);
-                }
+            } else if (backboardList.get(m).backboard == Backboard1.get(0).backboard) {
                 Backboard1.add(backboardList.get(m));
-                Backboard1.add(backboardList.get(n));
             }
         }
 
@@ -199,6 +206,13 @@ public class StatisticsService {
         }
 
         backboard.slogan = sloganMapper.getSloganByName(year, backboard.name).get(0).backboard;
+
+        backboardKingMapper.truncate();//
+        BackboardKing backboardKing = new BackboardKing();
+        backboardKing.name = backboard.name;
+        backboardKing.year = year;
+        backboardKing.count = backboard.backboard;
+        backboardKingMapper.insert(backboardKing);
 
         return backboard;
     }
