@@ -63,4 +63,7 @@ public interface SessionMapper extends Mapper<Session> {
     @Select("select * from t_session where year = ${year} AND name = #{name}")
     List<Session> getSessionByName(@Param("year") int year, @Param("name") String name);
 
+    @Select("select * from t_session where year = ${year} AND session = #{session}")
+    List<Session> getSessionBySession(@Param("year") int year, @Param("session") String session);
+
 }

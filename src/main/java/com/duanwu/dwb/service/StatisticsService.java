@@ -364,4 +364,191 @@ public class StatisticsService {
 
         return mvpSlogan;
     }
+
+    public SoloMap getSoloMap () {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        SoloMap soloMap = new SoloMap();
+
+        //A组
+        List<Session> sessionListA1 = sessionMapper.getSessionBySession(year, "A1");
+        List<Session> sessionListA2 = sessionMapper.getSessionBySession(year, "A2");
+        List<Session> sessionListA3 = sessionMapper.getSessionBySession(year, "A3");
+        SoloGroup soloGroupA1 = new SoloGroup();
+        soloGroupA1.groupName = "A";
+        soloGroupA1.playerLeft = sessionListA1.get(0).name;
+        soloGroupA1.score = sessionListA1.get(0).score + " " + ":" + " ";
+        soloGroupA1.score += sessionListA1.get(1).score;
+        soloGroupA1.playerRight = sessionListA1.get(1).name;
+
+        SoloGroup soloGroupA2 = new SoloGroup();
+        soloGroupA2.groupName = "A";
+        soloGroupA2.playerLeft = sessionListA2.get(0).name;
+        soloGroupA2.score = sessionListA2.get(0).score + " " + ":" + " ";
+        soloGroupA2.score += sessionListA2.get(1).score;
+        soloGroupA2.playerRight = sessionListA2.get(1).name;
+
+        SoloGroup soloGroupA3 = new SoloGroup();
+        soloGroupA3.groupName = "A";
+        soloGroupA3.playerLeft = sessionListA3.get(0).name;
+        soloGroupA3.score = sessionListA3.get(0).score + " " + ":" + " ";
+        soloGroupA3.score += sessionListA3.get(1).score;
+        soloGroupA3.playerRight = sessionListA3.get(1).name;
+
+        List<SoloGroup> soloGroupListA = new ArrayList<>();
+        soloGroupListA.add(soloGroupA1);
+        soloGroupListA.add(soloGroupA2);
+        soloGroupListA.add(soloGroupA3);
+
+        soloMap.soloGroupListA = soloGroupListA;
+
+        //B组
+        List<Session> sessionListB1 = sessionMapper.getSessionBySession(year, "B1");
+        List<Session> sessionListB2 = sessionMapper.getSessionBySession(year, "B2");
+        List<Session> sessionListB3 = sessionMapper.getSessionBySession(year, "B3");
+        SoloGroup soloGroupB1 = new SoloGroup();
+        soloGroupB1.groupName = "B";
+        soloGroupB1.playerLeft = sessionListB1.get(0).name;
+        soloGroupB1.score = sessionListB1.get(0).score + " " + ":" + " ";
+        soloGroupB1.score += sessionListB1.get(1).score;
+        soloGroupB1.playerRight = sessionListB1.get(1).name;
+
+        SoloGroup soloGroupB2 = new SoloGroup();
+        soloGroupB2.groupName = "B";
+        soloGroupB2.playerLeft = sessionListB2.get(0).name;
+        soloGroupB2.score = sessionListB2.get(0).score + " " + ":" + " ";
+        soloGroupB2.score += sessionListB2.get(1).score;
+        soloGroupB2.playerRight = sessionListB2.get(1).name;
+
+        SoloGroup soloGroupB3 = new SoloGroup();
+        soloGroupB3.groupName = "B";
+        soloGroupB3.playerLeft = sessionListB3.get(0).name;
+        soloGroupB3.score = sessionListB3.get(0).score + " " + ":" + " ";
+        soloGroupB3.score += sessionListB3.get(1).score;
+        soloGroupB3.playerRight = sessionListB3.get(1).name;
+
+        List<SoloGroup> soloGroupListB = new ArrayList<>();
+        soloGroupListB.add(soloGroupB1);
+        soloGroupListB.add(soloGroupB2);
+        soloGroupListB.add(soloGroupB3);
+
+        soloMap.soloGroupListB = soloGroupListB;
+
+        //C组
+        List<Session> sessionListC1 = sessionMapper.getSessionBySession(year, "C1");
+        List<Session> sessionListC2 = sessionMapper.getSessionBySession(year, "C2");
+        List<Session> sessionListC3 = sessionMapper.getSessionBySession(year, "C3");
+        SoloGroup soloGroupC1 = new SoloGroup();
+        soloGroupC1.groupName = "C";
+        soloGroupC1.playerLeft = sessionListC1.get(0).name;
+        soloGroupC1.score = sessionListC1.get(0).score + " " + ":" + " ";
+        soloGroupC1.score += sessionListC1.get(1).score;
+        soloGroupC1.playerRight = sessionListC1.get(1).name;
+
+        SoloGroup soloGroupC2 = new SoloGroup();
+        soloGroupC2.groupName = "C";
+        soloGroupC2.playerLeft = sessionListC2.get(0).name;
+        soloGroupC2.score = sessionListC2.get(0).score + " " + ":" + " ";
+        soloGroupC2.score += sessionListC2.get(1).score;
+        soloGroupC2.playerRight = sessionListC2.get(1).name;
+
+        SoloGroup soloGroupC3 = new SoloGroup();
+        soloGroupC3.groupName = "C";
+        soloGroupC3.playerLeft = sessionListC3.get(0).name;
+        soloGroupC3.score = sessionListC3.get(0).score + " " + ":" + " ";
+        soloGroupC3.score += sessionListC3.get(1).score;
+        soloGroupC3.playerRight = sessionListC3.get(1).name;
+
+        List<SoloGroup> soloGroupListC = new ArrayList<>();
+        soloGroupListC.add(soloGroupC1);
+        soloGroupListC.add(soloGroupC2);
+        soloGroupListC.add(soloGroupC3);
+
+        soloMap.soloGroupListC = soloGroupListC;
+
+        //D组
+        List<Session> sessionListD1 = sessionMapper.getSessionBySession(year, "D1");
+        List<Session> sessionListD2 = sessionMapper.getSessionBySession(year, "D2");
+        List<Session> sessionListD3 = sessionMapper.getSessionBySession(year, "D3");
+        SoloGroup soloGroupD1 = new SoloGroup();
+        soloGroupD1.groupName = "D";
+        soloGroupD1.playerLeft = sessionListD1.get(0).name;
+        soloGroupD1.score = sessionListD1.get(0).score + " " + ":" + " ";
+        soloGroupD1.score += sessionListD1.get(1).score;
+        soloGroupD1.playerRight = sessionListD1.get(1).name;
+
+        SoloGroup soloGroupD2 = new SoloGroup();
+        soloGroupD2.groupName = "D";
+        soloGroupD2.playerLeft = sessionListD2.get(0).name;
+        soloGroupD2.score = sessionListD2.get(0).score + " " + ":" + " ";
+        soloGroupD2.score += sessionListD2.get(1).score;
+        soloGroupD2.playerRight = sessionListD2.get(1).name;
+
+        SoloGroup soloGroupD3 = new SoloGroup();
+        soloGroupD3.groupName = "D";
+        soloGroupD3.playerLeft = sessionListD3.get(0).name;
+        soloGroupD3.score = sessionListD3.get(0).score + " " + ":" + " ";
+        soloGroupD3.score += sessionListD3.get(1).score;
+        soloGroupD3.playerRight = sessionListD3.get(1).name;
+
+        List<SoloGroup> soloGroupListD = new ArrayList<>();
+        soloGroupListD.add(soloGroupD1);
+        soloGroupListD.add(soloGroupD2);
+        soloGroupListD.add(soloGroupD3);
+
+        soloMap.soloGroupListD = soloGroupListD;
+
+        //E组
+        List<Session> sessionListE1 = sessionMapper.getSessionBySession(year, "E1");
+        if (sessionListE1 != null && sessionListE1.size() != 0) {
+            SoloGroup soloGroupE1 = new SoloGroup();
+            soloGroupE1.groupName = "E";
+            soloGroupE1.playerLeft = sessionListE1.get(0).name;
+            soloGroupE1.score = sessionListE1.get(0).score + " " + ":" + " ";
+            soloGroupE1.score += sessionListE1.get(1).score;
+            soloGroupE1.playerRight = sessionListE1.get(1).name;
+
+            List<SoloGroup> soloGroupListE = new ArrayList<>();
+            soloGroupListE.add(soloGroupE1);
+
+            soloMap.soloGroupListE = soloGroupListE;
+        }
+
+        //F组
+        List<Session> sessionListF1 = sessionMapper.getSessionBySession(year, "F1");
+        if (sessionListF1 != null && sessionListF1.size() != 0) {
+            SoloGroup soloGroupF1 = new SoloGroup();
+            soloGroupF1.groupName = "F";
+            soloGroupF1.playerLeft = sessionListF1.get(0).name;
+            soloGroupF1.score = sessionListF1.get(0).score + " " + ":" + " ";
+            soloGroupF1.score += sessionListF1.get(1).score;
+            soloGroupF1.playerRight = sessionListF1.get(1).name;
+
+            List<SoloGroup> soloGroupListF = new ArrayList<>();
+            soloGroupListF.add(soloGroupF1);
+
+            soloMap.soloGroupListF = soloGroupListF;
+        }
+
+        //G组
+        List<Session> sessionListG1 = sessionMapper.getSessionBySession(year, "G1");
+        if (sessionListG1 != null && sessionListG1.size() != 0) {
+            SoloGroup soloGroupG1 = new SoloGroup();
+            soloGroupG1.groupName = "G";
+            soloGroupG1.playerLeft = sessionListG1.get(0).name;
+            soloGroupG1.score = sessionListG1.get(0).score + " " + ":" + " ";
+            soloGroupG1.score += sessionListG1.get(1).score;
+            soloGroupG1.playerRight = sessionListG1.get(1).name;
+
+            List<SoloGroup> soloGroupListG = new ArrayList<>();
+            soloGroupListG.add(soloGroupG1);
+
+            soloMap.soloGroupListG = soloGroupListG;
+        }
+
+        soloMap.year = year;
+        return soloMap;
+    }
 }

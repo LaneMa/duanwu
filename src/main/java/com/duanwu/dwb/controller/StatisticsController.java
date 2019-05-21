@@ -53,4 +53,9 @@ public class StatisticsController {
     public Object getMvp() {
         return statisticsService.getMvp();
     }
+
+    @GetMapping("/map")
+    public Object getSoloMap() {
+        return statisticsService.getSoloMap();
+    }
 }
