@@ -346,6 +346,16 @@ public class StatisticsService {
         mvpMapper.insert(mvp);
     }
 
+    public List<Ticket> getTicket() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int year = Integer.parseInt(sdf.format(date));
+
+        List<Ticket> ticketList = ticketMapper.getTicket(year);
+
+        return ticketList;
+    }
+
     public MvpSlogan getMvp() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         Date date = new Date();

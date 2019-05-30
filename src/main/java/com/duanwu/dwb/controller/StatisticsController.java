@@ -49,6 +49,11 @@ public class StatisticsController {
         statisticsService.setTicket(ticketList);
     }
 
+    @GetMapping("/tickets")
+    public Object getTicket() {
+        return statisticsService.getTicket();
+    }
+
     @GetMapping("/mvp")
     public Object getMvp() {
         return statisticsService.getMvp();
