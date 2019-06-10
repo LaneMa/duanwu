@@ -63,4 +63,9 @@ public class StatisticsController {
     public Object getSoloMap() {
         return statisticsService.getSoloMap();
     }
+
+    @GetMapping("/honor")
+    public Object getHonor() {
+        return statisticsService.getHonor();
+    }
 }

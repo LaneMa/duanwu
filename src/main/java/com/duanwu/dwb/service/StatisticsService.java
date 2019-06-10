@@ -39,6 +39,9 @@ public class StatisticsService {
     @Autowired
     BackboardKingMapper backboardKingMapper;
 
+    @Autowired
+    HonorMapper honorMapper;
+
     public Solo getSoloKing() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         Date date = new Date();
@@ -560,5 +563,11 @@ public class StatisticsService {
 
         soloMap.year = year;
         return soloMap;
+    }
+
+    public List<Honor> getHonor() {
+        List<Honor> honorList = honorMapper.selectAll();
+
+        return honorList;
     }
 }
